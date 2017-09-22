@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.donygeorge.nytimessearch.R
-import com.donygeorge.nytimessearch.adapters.ArticleArrayAdapters
+import com.donygeorge.nytimessearch.adapters.ArticleArrayAdapter
 import com.donygeorge.nytimessearch.models.Article
 import com.donygeorge.nytimessearch.models.getArticles
 import com.loopj.android.http.AsyncHttpClient
@@ -21,12 +21,12 @@ import org.json.JSONObject
 class SearchActivity : AppCompatActivity() {
 
     var articles : MutableList<Article> = mutableListOf()
-    var adapter : ArticleArrayAdapters? = null
+    var adapter : ArticleArrayAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        adapter = ArticleArrayAdapters(this, articles)
+        adapter = ArticleArrayAdapter(this, articles)
 
         btnSearch.setOnClickListener { onArticleSearch(it) }
         gvResults.adapter = adapter
