@@ -1,13 +1,16 @@
 package com.donygeorge.nytimessearch.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
+import android.view.MenuItem
 import com.donygeorge.nytimessearch.R
 import com.donygeorge.nytimessearch.adapters.ArticleArrayAdapter
 import com.donygeorge.nytimessearch.models.Article
+import com.donygeorge.nytimessearch.models.Filter
 import com.donygeorge.nytimessearch.models.getArticles
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -16,14 +19,14 @@ import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_search.*
 import org.json.JSONArray
 import org.json.JSONObject
-
-
+import org.parceler.Parcels
 
 
 class SearchActivity : AppCompatActivity() {
 
     var articles : MutableList<Article> = mutableListOf()
     var adapter : ArticleArrayAdapter? = null
+    var filter : Filter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,5 +77,17 @@ class SearchActivity : AppCompatActivity() {
         searchItem.expandActionView();
         searchView.requestFocus();
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.action_filter -> {
+                val i = Intent(this, FilterActivity::class.java)
+                i.putExtra("filter", Parcels.wrap(filter));
+                startActivity(i) // brings up the second activity
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:design:26.1.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -34,7 +35,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.jakewharton:butterknife:8.8.0'
     kapt "com.jakewharton:butterknife-compiler:8.8.0"
+    compile 'org.parceler:parceler-api:1.1.6'
+    kapt 'org.parceler:parceler:1.1.6'
 }
 repositories {
     mavenCentral()
+    google()
 }
