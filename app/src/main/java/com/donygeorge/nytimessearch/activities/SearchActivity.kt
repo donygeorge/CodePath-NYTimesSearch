@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
@@ -35,7 +36,8 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         mAdapter = ArticleArrayAdapter(this, mArticles)
-        gvResults.adapter = mAdapter
+        rvResults.adapter = mAdapter
+        rvResults.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         onArticleSearch()
     }
 
@@ -47,7 +49,8 @@ class SearchActivity : AppCompatActivity() {
         client.get(url, getRequestParams(mFilter, mQuery), object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
                 var jsonArrayResults = response?.getJSONObject("response")?.getJSONArray("docs")
-                mAdapter!!.addAll(getArticles(jsonArrayResults))
+                mArticles.addAll(getArticles(jsonArrayResults))
+                mAdapter?.notifyDataSetChanged()
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, res: String, t: Throwable) {
