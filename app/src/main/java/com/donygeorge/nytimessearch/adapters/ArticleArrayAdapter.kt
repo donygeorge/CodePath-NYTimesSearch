@@ -1,7 +1,11 @@
 package com.donygeorge.nytimessearch.adapters
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -10,9 +14,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.donygeorge.nytimessearch.R
-import com.donygeorge.nytimessearch.activities.WebViewActivity
 import com.donygeorge.nytimessearch.helpers.DynamicHeightImageView
 import com.donygeorge.nytimessearch.models.Article
+
+
+
+
+
+
+
+
 
 
 class ArticleArrayAdapter(context: Context, articles: List<Article>)
@@ -102,8 +113,20 @@ class ArticleArrayAdapter(context: Context, articles: List<Article>)
 
     private fun loadURL(url : String?) {
         if (url == null) return
-        val i = Intent(mContext, WebViewActivity::class.java)
-        i.putExtra("url", url);
-        mContext!!.startActivity(i)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, "Shared from NYTimesSearch: " + url)
+        val bitmap = BitmapFactory.decodeResource(mContext!!.getResources(), android.R.drawable.ic_menu_share)
+        val requestCode = 100
+        val pendingIntent = PendingIntent.getActivity(mContext,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
+        customTabsIntent.launchUrl(mContext, Uri.parse(url));
     }
 }
