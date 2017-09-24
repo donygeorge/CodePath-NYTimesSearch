@@ -1,5 +1,6 @@
 package com.donygeorge.nytimessearch.models
 
+import android.text.TextUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -29,6 +30,10 @@ class Article (jsonObject: JSONObject) {
         } catch (e : JSONException) {
             e.printStackTrace()
         }
+    }
+
+    fun hasImage() : Boolean {
+        return !TextUtils.isEmpty(thumbnail);
     }
 }
 
