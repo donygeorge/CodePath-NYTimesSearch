@@ -62,7 +62,7 @@ tools:context="com.donygeorge.nytimessearch.activities.FilterActivity">
         android:id="@+id/linearLayout">
 
         <CheckBox
-            android:id="@+id/cb_arts"
+            android:id="@+id/cbArts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/arts" />
