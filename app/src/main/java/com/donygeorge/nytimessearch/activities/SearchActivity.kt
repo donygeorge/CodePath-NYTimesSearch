@@ -46,7 +46,6 @@ class SearchActivity : AppCompatActivity() {
 
         client.get(url, getRequestParams(mFilter, mQuery), object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
-//                mAdapter!!.clear()
                 var jsonArrayResults = response?.getJSONObject("response")?.getJSONArray("docs")
                 mAdapter!!.addAll(getArticles(jsonArrayResults))
             }
