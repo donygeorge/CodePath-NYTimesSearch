@@ -18,7 +18,6 @@ import com.donygeorge.nytimessearch.fragments.SettingsFragment
 import com.donygeorge.nytimessearch.helpers.EndlessRecyclerViewScrollListener
 import com.donygeorge.nytimessearch.models.Article
 import com.donygeorge.nytimessearch.models.Filter
-import com.donygeorge.nytimessearch.models.SortOrder
 import com.donygeorge.nytimessearch.models.getArticles
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.JsonHttpResponseHandler
@@ -125,7 +124,7 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
                 requestParams.put("fq", filter.getNewsDeskQuery())
             }
         } else {
-            requestParams.put("sort", SortOrder.NEWEST)
+            requestParams.put("sort", "newest")
         }
 
         return requestParams
