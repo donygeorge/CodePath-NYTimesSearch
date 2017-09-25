@@ -1,5 +1,6 @@
 package com.donygeorge.nytimessearch.activities
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
@@ -27,6 +28,7 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
 
     lateinit var mArticles : MutableList<Article>
     lateinit var mAdapter: ArticleArrayAdapter
+    lateinit var mStaggeredGridLayoutManager : StaggeredGridLayoutManager
     var mFilter : Filter? = null
     var mQuery : String? = null
     lateinit var mScrollListener : EndlessRecyclerViewScrollListener
@@ -37,9 +39,10 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
         mArticles = mutableListOf()
         mAdapter = ArticleArrayAdapter(this, mArticles)
         rvResults.adapter = mAdapter
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        rvResults.layoutManager = layoutManager
-        mScrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
+        mStaggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        setupLayoutManager(mStaggeredGridLayoutManager)
+        rvResults.layoutManager = mStaggeredGridLayoutManager
+        mScrollListener = object : EndlessRecyclerViewScrollListener(mStaggeredGridLayoutManager) {
 
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 // Triggered only when new data needs to be appended to the list
@@ -50,6 +53,20 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
         rvResults.setOnScrollListener(mScrollListener)
 
         onArticleSearch(0)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        setupLayoutManager(mStaggeredGridLayoutManager)
+    }
+
+    fun setupLayoutManager(layoutManager : StaggeredGridLayoutManager) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager.setSpanCount(2);
+        } else {
+            //show in two columns
+            layoutManager.setSpanCount(3);
+        }
     }
 
     private fun onClearSearch() {
