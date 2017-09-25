@@ -1,13 +1,14 @@
-package com.donygeorge.nytimessearch.activities
+package com.donygeorge.nytimessearch.fragments
 
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.os.Parcelable
+import android.support.v4.app.DialogFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.DatePicker
 import com.donygeorge.nytimessearch.R
-import com.donygeorge.nytimessearch.fragments.DatePickerFragment
 import com.donygeorge.nytimessearch.models.Filter
 import com.donygeorge.nytimessearch.models.NewsDesk
 import com.donygeorge.nytimessearch.models.SortOrder
@@ -16,17 +17,24 @@ import org.parceler.Parcels
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class FilterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+class SettingsFragment : DialogFragment() , DatePickerDialog.OnDateSetListener {
 
     var mFilter : Filter? = null
     var mDate : Date? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filter)
-        supportActionBar?.title = "Search settings"
-        mFilter = Parcels.unwrap<Filter>(intent.getParcelableExtra("filter"))
+    public interface SettingsFragmentListener {
+        fun onSettingsSaved(filter : Filter)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater!!.inflate(R.layout.fragment_settings, container, false)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mFilter = Parcels.unwrap<Filter>(arguments.getParcelable<Parcelable>("filter"))
         mDate = mFilter?.date
         if (mDate == null) {
             // Use last year's date
@@ -70,18 +78,19 @@ class FilterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         if (desks == null) return
 
         for (desk in desks) {
-           when (desk) {
-               NewsDesk.ARTS -> cbArts.isChecked = true
-               NewsDesk.FASHION_AND_STYLE -> cbFashion.isChecked = true
-               NewsDesk.SPORTS -> cbSports.isChecked = true
-           }
+            when (desk) {
+                NewsDesk.ARTS -> cbArts.isChecked = true
+                NewsDesk.FASHION_AND_STYLE -> cbFashion.isChecked = true
+                NewsDesk.SPORTS -> cbSports.isChecked = true
+            }
         }
     }
 
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment()
         newFragment.setDate(mDate)
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.setTargetFragment(this, 300)
+        newFragment.show(fragmentManager, "datePicker");
     }
 
     private fun onSave() {
@@ -92,9 +101,20 @@ class FilterActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
         if (cbFashion.isChecked) desks.add(NewsDesk.FASHION_AND_STYLE)
         if (cbSports.isChecked) desks.add(NewsDesk.SPORTS)
         val filter = Filter(date, sortOrder, desks)
-        val intent = Intent()
-        intent.putExtra("filter", Parcels.wrap(filter));
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+        val listener = activity as SettingsFragmentListener
+        listener.onSettingsSaved(filter)
+        dismiss()
+    }
+
+    companion object {
+        fun newInstance(filter : Filter?) : SettingsFragment {
+            val fragment = SettingsFragment()
+
+	    	val bundle = Bundle();
+            bundle.putParcelable("filter", Parcels.wrap(filter))
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 }

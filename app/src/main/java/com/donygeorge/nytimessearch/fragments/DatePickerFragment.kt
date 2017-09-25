@@ -18,8 +18,8 @@ class DatePickerFragment : DialogFragment() {
         val month = c.get(Calendar.MONTH);
         val day = c.get(Calendar.DAY_OF_MONTH);
 
-        val listener = getActivity() as DatePickerDialog.OnDateSetListener
-        return DatePickerDialog(getActivity(), listener, year, month, day)
+        val listener = getTargetFragment() as DatePickerDialog.OnDateSetListener
+        return DatePickerDialog(getTargetFragment().context, listener, year, month, day)
     }
 
     fun setDate(date : Date?) {

@@ -1,7 +1,5 @@
 package com.donygeorge.nytimessearch.activities
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.donygeorge.nytimessearch.R
 import com.donygeorge.nytimessearch.adapters.ArticleArrayAdapter
+import com.donygeorge.nytimessearch.fragments.SettingsFragment
 import com.donygeorge.nytimessearch.helpers.EndlessRecyclerViewScrollListener
 import com.donygeorge.nytimessearch.models.Article
 import com.donygeorge.nytimessearch.models.Filter
@@ -23,17 +22,14 @@ import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_search.*
 import org.json.JSONObject
-import org.parceler.Parcels
 
-
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentListener {
 
     lateinit var mArticles : MutableList<Article>
     lateinit var mAdapter: ArticleArrayAdapter
     var mFilter : Filter? = null
     var mQuery : String? = null
     lateinit var mScrollListener : EndlessRecyclerViewScrollListener
-    val REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,8 +83,10 @@ class SearchActivity : AppCompatActivity() {
         requestParams.put("page", page)
         if (filter != null) {
             requestParams.put("sort", filter.getSortOrderQuery())
-            requestParams.put("fq", filter.getNewsDeskQuery())
             requestParams.put("begin_date", filter.getStartDateQuery())
+            if (filter.newsDesks!!.size > 0 ) {
+                requestParams.put("fq", filter.getNewsDeskQuery())
+            }
         }
 
         return requestParams
@@ -124,24 +122,19 @@ class SearchActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_filter -> {
-                val i = Intent(this, FilterActivity::class.java)
-                i.putExtra("filter", Parcels.wrap(mFilter));
-                startActivityForResult(i, REQUEST_CODE) // brings up the second activity
+                val settingsFragment = SettingsFragment.newInstance(mFilter);
+                settingsFragment.show(supportFragmentManager, "fragment_settings");
             }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data == null) return
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            val filter = Parcels.unwrap<Filter>(data.getParcelableExtra("filter"))
-            if (filter != null && !filter.equals(mFilter)) {
-                mFilter = filter
-                onClearSearch()
-                onArticleSearch(0)
-            }
+    override fun onSettingsSaved(filter : Filter) {
+        if (filter != null && !filter.equals(mFilter)) {
+            mFilter = filter
+            onClearSearch()
+            onArticleSearch(0)
         }
     }
 }
