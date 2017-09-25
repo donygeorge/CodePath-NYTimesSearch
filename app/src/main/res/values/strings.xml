@@ -10,6 +10,7 @@
     <string name="fashion"><![CDATA[Fashion & Style]]></string>
     <string name="sports">Sports</string>
     <string name="save">Save</string>
+    <string name="title">The New York Times</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -4,12 +4,16 @@ import android.text.TextUtils
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Article (jsonObject: JSONObject) {
     lateinit var webURL : String
     lateinit var headline : String
+    var date : Date? = null
     var thumbnail : String? = null
     var snippet : String? = null
+    var source : String? = null
     var thumbnailHeight : Int = 0
     var thumbnailWidth : Int = 0
 
@@ -18,6 +22,7 @@ class Article (jsonObject: JSONObject) {
             webURL = jsonObject.getString("web_url")
             headline = jsonObject.getJSONObject("headline").getString("main")
             snippet = jsonObject.getString("snippet")
+            source = jsonObject.getString("source")
             var multimedia : JSONArray = jsonObject.getJSONArray("multimedia")
             if (multimedia.length() > 0) {
                 var multimediaJSON = multimedia.getJSONObject(0)
@@ -27,6 +32,8 @@ class Article (jsonObject: JSONObject) {
             } else {
                 this.thumbnail = ""
             }
+            this.date = dateFromString(jsonObject.getString("pub_date"))
+
         } catch (e : JSONException) {
             e.printStackTrace()
         }
@@ -34,6 +41,17 @@ class Article (jsonObject: JSONObject) {
 
     fun hasImage() : Boolean {
         return !TextUtils.isEmpty(thumbnail);
+    }
+
+    fun dateAsString() : String? {
+        if (date == null) return null
+        val sdf = SimpleDateFormat("MMM dd, yyyy")
+        return sdf.format(date)
+    }
+
+    private fun dateFromString(dateString : String) : Date {
+        val format = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH)
+        return format.parse(dateString)
     }
 }
 

@@ -18,14 +18,6 @@ import com.donygeorge.nytimessearch.helpers.DynamicHeightImageView
 import com.donygeorge.nytimessearch.models.Article
 
 
-
-
-
-
-
-
-
-
 class ArticleArrayAdapter(context: Context, articles: List<Article>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -54,12 +46,16 @@ class ArticleArrayAdapter(context: Context, articles: List<Article>)
 
         lateinit var tvTitle: TextView
         lateinit var tvSnippet: TextView
+        lateinit var tvSource: TextView
+        lateinit var tvDate: TextView
         lateinit var view : View
 
         init {
             view = inView
             tvTitle = view.findViewById<View>(R.id.tvTitle) as TextView
             tvSnippet = view.findViewById<View>(R.id.tvSnippet) as TextView
+            tvSource = view.findViewById<View>(R.id.tvSource) as TextView
+            tvDate = view.findViewById<View>(R.id.tvDate) as TextView
         }
     }
 
@@ -85,7 +81,13 @@ class ArticleArrayAdapter(context: Context, articles: List<Article>)
         textViewHolder!!.tvTitle.text = article!!.headline
         textViewHolder!!.tvSnippet.text = article!!.snippet
         textViewHolder!!.view.setOnClickListener { loadURL(article.webURL) }
-
+        if (article.source != null) {
+            textViewHolder!!.tvSource.text = article!!.source
+        }
+        val dateAsString = article.dateAsString()
+        if (dateAsString != null) {
+            textViewHolder!!.tvDate.text = dateAsString
+        }
         if (viewHolder.itemViewType == IMAGE_TYPE) {
             val imageViewHolder = viewHolder as ImageViewHolder
             val thumbnail = article.thumbnail
@@ -94,7 +96,7 @@ class ArticleArrayAdapter(context: Context, articles: List<Article>)
                 imageViewHolder.ivImage.setHeightRatio(ratio)
                 Glide.with(mContext)
                         .load(thumbnail)
-                        .placeholder(R.mipmap.ic_launcher)
+                        .placeholder(R.mipmap.loading_image)
                         .into(imageViewHolder.ivImage)
             }
         }

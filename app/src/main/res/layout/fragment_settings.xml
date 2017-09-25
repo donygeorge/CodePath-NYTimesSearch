@@ -4,60 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.donygeorge.nytimessearch.activities.FilterActivity">
+    android:padding="10dp" >
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        style="@style/settingsTitle"
         android:text="@string/begin_date" />
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spSortOrder"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/spSortOrder"
-        android:text="TextView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView"
+        tools:text="May 03, 2017"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView3"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/tvDate"
+        style="@style/settingsTitle"
         android:text="@string/sort_order" />
 
     <Spinner
         android:id="@+id/spSortOrder"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDate"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView3"
         android:entries="@array/sort_order" />
 
     <TextView
         android:id="@+id/textView4"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/spSortOrder"
+        style="@style/settingsTitle"
         android:text="@string/new_desk" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spSortOrder"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:paddingBelow="20dp"
+        android:layout_below="@+id/textView4"
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
@@ -82,10 +82,15 @@
 
     <Button
         android:id="@+id/btSave"
-        android:layout_width="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         android:text="@string/save" />
 
 </RelativeLayout>

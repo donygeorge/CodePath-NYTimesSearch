@@ -1,6 +1,7 @@
 package com.donygeorge.nytimessearch.activities
 
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.donygeorge.nytimessearch.R
 import com.donygeorge.nytimessearch.adapters.ArticleArrayAdapter
 import com.donygeorge.nytimessearch.fragments.SettingsFragment
@@ -24,6 +26,8 @@ import cz.msebera.android.httpclient.Header
 import kotlinx.android.synthetic.main.activity_search.*
 import org.json.JSONObject
 
+
+
 class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentListener {
 
     lateinit var mArticles : MutableList<Article>
@@ -33,9 +37,22 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
     var mQuery : String? = null
     lateinit var mScrollListener : EndlessRecyclerViewScrollListener
 
+    inner class SpacesItemDecoration(private val mSpace: Int) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            outRect.left = mSpace
+            outRect.right = mSpace
+            outRect.bottom = mSpace
+            outRect.top = mSpace
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        supportActionBar!!.setTitle(R.string.title)
+
         mArticles = mutableListOf()
         mAdapter = ArticleArrayAdapter(this, mArticles)
         rvResults.adapter = mAdapter
@@ -51,6 +68,8 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
             }
         }
         rvResults.setOnScrollListener(mScrollListener)
+
+        rvResults.addItemDecoration(SpacesItemDecoration(10))
 
         onArticleSearch(0)
     }
@@ -131,8 +150,6 @@ class SearchActivity : AppCompatActivity(), SettingsFragment.SettingsFragmentLis
                 return false
             }
         })
-        searchItem.expandActionView();
-        searchView.requestFocus();
         return super.onCreateOptionsMenu(menu)
     }
 
