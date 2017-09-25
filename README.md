@@ -40,8 +40,8 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-[x] Wrote the application in Kotlin, learning the language along the way
-[x] Adapt layout to landscape mode
+* [x] Wrote the application in Kotlin, learning the language along the way
+* [x] Adapt layout to landscape mode
 
 ## Video Walkthrough
 
