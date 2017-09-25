@@ -82,11 +82,17 @@ class ArticleArrayAdapter(context: Context, articles: List<Article>)
         textViewHolder!!.tvSnippet.text = article!!.snippet
         textViewHolder!!.view.setOnClickListener { loadURL(article.webURL) }
         if (article.source != null) {
+            textViewHolder!!.tvSource.visibility = View.VISIBLE
             textViewHolder!!.tvSource.text = article!!.source
+        } else {
+            textViewHolder!!.tvSource.visibility = View.INVISIBLE
         }
         val dateAsString = article.dateAsString()
         if (dateAsString != null) {
+            textViewHolder!!.tvDate.visibility = View.VISIBLE
             textViewHolder!!.tvDate.text = dateAsString
+        } else {
+            textViewHolder!!.tvDate.visibility = View.INVISIBLE
         }
         if (viewHolder.itemViewType == IMAGE_TYPE) {
             val imageViewHolder = viewHolder as ImageViewHolder

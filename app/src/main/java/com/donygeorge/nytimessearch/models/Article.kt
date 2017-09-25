@@ -50,8 +50,11 @@ class Article (jsonObject: JSONObject) {
     }
 
     private fun dateFromString(dateString : String) : Date {
-        val format = SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH)
-        return format.parse(dateString)
+        val indexOfT = dateString.indexOf("T")
+        val newString = dateString.substring(0, indexOfT)
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        format.isLenient = false
+        return format.parse(newString)
     }
 }
 
