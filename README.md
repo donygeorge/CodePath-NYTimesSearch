@@ -47,8 +47,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Walkthrough: Portrait](https://user-images.githubusercontent.com/1111292/30509761-e14e34ce-9a85-11e7-8762-cde7a47e57a0.gif)
-![Walkthrough: Landscape](https://user-images.githubusercontent.com/1111292/30509742-8ac948be-9a85-11e7-81d1-19746dd25b43.gif)
+![Walkthrough: Portrait](https://user-images.githubusercontent.com/1111292/30791714-2fe5d2f6-a169-11e7-97e8-192a2a21ce40.gif)
+![Walkthrough: Landscape](https://user-images.githubusercontent.com/1111292/30791747-6d84f7b8-a169-11e7-8302-6a4412223f88.gif)
 
 GIF created with [ezgif](https://ezgif.com/video-to-gif).
 
