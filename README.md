@@ -2,7 +2,7 @@
 
 **NYTimesSearch** is an android app that allows a user to search for articles on web using simple filters. The app utilizes [New York Times Search API](http://developer.nytimes.com/docs/read/article_search_api_v2).
 
-Time spent: **10** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
@@ -40,15 +40,17 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* Wrote the application in Kotlin, learning the language along the way
+[x] Wrote the application in Kotlin, learning the language along the way
+[x] Adapt layout to landscape mode
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Walkthrough: Portrait](https://user-images.githubusercontent.com/1111292/30509761-e14e34ce-9a85-11e7-8762-cde7a47e57a0.gif)
+![Walkthrough: Landscape](https://user-images.githubusercontent.com/1111292/30509742-8ac948be-9a85-11e7-81d1-19746dd25b43.gif)
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [ezgif](https://ezgif.com/video-to-gif).
 
 ## Notes
 
@@ -57,7 +59,8 @@ Describe any challenges encountered while building the app.
 ## Open-source libraries used
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
-- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
+- [ButterKnife](https://github.com/JakeWharton/butterknife) - Bind Android views and callbacks to fields and methods 
 
 ## License
 
