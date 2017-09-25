@@ -12,7 +12,7 @@ import com.donygeorge.nytimessearch.R
 import com.donygeorge.nytimessearch.models.Filter
 import com.donygeorge.nytimessearch.models.NewsDesk
 import com.donygeorge.nytimessearch.models.SortOrder
-import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 import org.parceler.Parcels
 import java.text.SimpleDateFormat
 import java.util.*
