@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 enum class SortOrder {
-    OLDEST, NEWEST
+    NEWEST,
+    OLDEST
 }
 
 enum class NewsDesk {
